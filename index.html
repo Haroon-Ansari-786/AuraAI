@@ -2,107 +2,825 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraAI - Advanced AI Application</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aura AI Pro - Universal Intelligence</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        surface: '#f9fafb',
+                        'surface-dark': '#0f172a', /* Slightly deeper professional dark */
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background-color: #334155; }
+
+        /* Typing Cursor */
+        .typing-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: currentColor;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Prevent auto-zoom on mobile iOS */
+        input, textarea, select { font-size: 16px !important; }
+
+        /* Markdown Overrides for Pro Look */
+        .prose pre { 
+            background-color: #1e293b !important; 
+            color: #f8fafc !important; 
+            border-radius: 0.75rem;
+            padding: 1rem;
+            overflow-x: auto;
+            border: 1px solid #334155;
+        }
+        .dark .prose pre { background-color: #000000 !important; border-color: #1e293b; }
+        .prose code { color: #ec4899; background: #f1f5f9; padding: 0.15rem 0.3rem; border-radius: 0.25rem; font-size: 0.875em; }
+        .dark .prose code { color: #f472b6; background: #1e293b; }
+        .prose pre code { color: inherit; background: transparent; padding: 0; }
+        
+        .toast-enter { animation: slideInUp 0.3s ease-out forwards; }
+        @keyframes slideInUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 transition duration-300">
-    <div class="container mx-auto p-4">
-        <header class="text-center mb-6">
-            <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-100">AuraAI</h1>
-            <p class="text-lg text-gray-600 dark:text-gray-300">Your Multi-Model AI Assistant</p>
-        </header>
-        <main>
-            <section id="models" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Multi-Model AI Support</h2>
-                <p class="text-gray-600 dark:text-gray-300">Access to over 25 AI models for diverse tasks and applications.</p>
-            </section>
-            <section id="settings-panel" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Advanced Settings Panel</h2>
-                <p class="text-gray-600 dark:text-gray-300">Control the temperature, top-p, and frequency penalty for fine-tuned responses.</p>
-            </section>
-            <section id="voice-chat" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Voice Chat</h2>
-                <p class="text-gray-600 dark:text-gray-300">Engage in conversations using the Web Speech API.</p>
-            </section>
-            <section id="code-execution" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Code Execution Sandbox</h2>
-                <p class="text-gray-600 dark:text-gray-300">Run your code with instant feedback.</p>
-            </section>
-            <section id="image-generation" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Image Generation</h2>
-                <p class="text-gray-600 dark:text-gray-300">Create images with advanced AI models.</p>
-            </section>
-            <section id="conversation-memory" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Conversation Memory</h2>
-                <p class="text-gray-600 dark:text-gray-300">Keep track of your chats with metadata.</p>
-            </section>
-            <section id="export-options" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Export Options</h2>
-                <p class="text-gray-600 dark:text-gray-300">Export your conversation to PDF, JSON, or Markdown.</p>
-            </section>
-            <section id="model-comparison" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Model Comparison</h2>
-                <p class="text-gray-600 dark:text-gray-300">Compare the performance of different models.</p>
-            </section>
-            <section id="token-counter" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Token Counter</h2>
-                <p class="text-gray-600 dark:text-gray-300">Track your token usage in real-time.</p>
-            </section>
-            <section id="system-prompts" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">System Prompts Library</h2>
-                <p class="text-gray-600 dark:text-gray-300">Access preset conversation starters.</p>
-            </section>
-            <section id="conversation-search" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Conversation Search</h2>
-                <p class="text-gray-600 dark:text-gray-300">Easily search through your conversations.</p>
-            </section>
-            <section id="tagging" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Conversation Tagging</h2>
-                <p class="text-gray-600 dark:text-gray-300">Tag conversations for better organization.</p>
-            </section>
-            <section id="collaborative-features" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Collaborative Features</h2>
-                <p class="text-gray-600 dark:text-gray-300">Work together with others in real-time.</p>
-            </section>
-            <section id="usage-analytics" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Usage Analytics</h2>
-                <p class="text-gray-600 dark:text-gray-300">Analyze your usage patterns and improve efficiency.</p>
-            </section>
-            <section id="advanced-markdown" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Advanced Markdown</h2>
-                <p class="text-gray-600 dark:text-gray-300">Utilize advanced markdown with code highlighting using Prism.js.</p>
-            </section>
-            <section id="conversation-branching" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Conversation Branching</h2>
-                <p class="text-gray-600 dark:text-gray-300">Create branched conversations for complex discussions.</p>
-            </section>
-            <section id="message-editing" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Message Editing</h2>
-                <p class="text-gray-600 dark:text-gray-300">Edit your messages after sending.</p>
-            </section>
-            <section id="retry-functionality" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Retry Functionality</h2>
-                <p class="text-gray-600 dark:text-gray-300">Easily retry failed requests.</p>
-            </section>
-            <section id="custom-model-parameters" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Custom Model Parameters</h2>
-                <p class="text-gray-600 dark:text-gray-300">Adjust model parameters per conversation.</p>
-            </section>
-            <section id="streaming-optimization" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Streaming Optimization</h2>
-                <p class="text-gray-600 dark:text-gray-300">Streamline the response process for quick feedback.</p>
-            </section>
-            <section id="error-recovery" class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Error Recovery</h2>
-                <p class="text-gray-600 dark:text-gray-300">Automatically recover from errors without losing progress.</p>
-            </section>
-        </main>
-        <footer class="text-center mt-6">
-            <p class="text-gray-600 dark:text-gray-300">© 2026 AuraAI. All rights reserved.</p>
-        </footer>
+
+<body class="bg-surface dark:bg-surface-dark text-gray-900 dark:text-gray-100 flex min-h-screen transition-colors duration-300 font-sans m-0 p-0 antialiased">
+
+    <div id="loading" class="fixed inset-0 flex flex-col items-center justify-center bg-white dark:bg-gray-900 z-[100] transition-opacity duration-500">
+        <svg class="animate-spin h-12 w-12 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <div class="text-xl font-bold tracking-wide text-gray-800 dark:text-gray-200">Aura AI <span class="text-blue-600">Pro</span></div>
+        <div class="text-sm text-gray-500 mt-2">Initializing Systems...</div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.min.js"></script>
+
+    <div id="app" class="hidden flex w-full min-h-screen relative">
+        
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden md:hidden backdrop-blur-sm" onclick="toggleSidebar()"></div>
+
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 flex flex-col h-[100dvh] shadow-xl md:shadow-none">
+            
+            <div class="p-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
+                <div class="flex items-center gap-2 font-black text-xl text-blue-600 dark:text-blue-500 tracking-tight">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    Aura AI <span class="text-xs align-top bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-1.5 py-0.5 rounded ml-1">PRO</span>
+                </div>
+                <button onclick="toggleSidebar()" class="md:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="p-3 space-y-2">
+                <button onclick="createNewChat()" class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl transition-all shadow-md active:scale-95">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    New Workspace
+                </button>
+            </div>
+
+            <div class="px-3 pb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-2">Recent Chats</div>
+            <div class="flex-1 overflow-y-auto px-3 space-y-1" id="chat-list">
+                </div>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-2">
+                <button onclick="exportCurrentChat()" class="w-full flex items-center gap-2 py-2 px-3 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    Export Chat Data
+                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="openSettings()" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 text-sm font-medium text-gray-800 dark:text-gray-200 bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-lg transition-colors shadow-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        Settings
+                    </button>
+                    <button onclick="toggleTheme()" class="p-2 text-gray-800 dark:text-gray-200 bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-lg transition-colors shadow-sm" id="theme-btn" title="Toggle Dark Mode">
+                        </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0 bg-white dark:bg-[#0b1120] relative">
+            
+            <header class="sticky top-0 z-20 bg-white/85 dark:bg-[#0b1120]/85 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-3 w-full overflow-hidden">
+                    <button onclick="toggleSidebar()" class="md:hidden p-1.5 -ml-1.5 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                    <div id="current-chat-title" class="font-bold text-gray-800 dark:text-gray-100 truncate max-w-[200px] sm:max-w-md">New Workspace</div>
+                </div>
+                
+                <div class="hidden sm:flex items-center flex-shrink-0 bg-blue-50 dark:bg-blue-900/30 px-3 py-1.5 rounded-full text-xs font-semibold text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/50 shadow-sm cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors" onclick="openSettings()">
+                    <svg class="w-4 h-4 mr-1.5 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2zm0 3.8l6.5 11.2H5.5L12 5.8z"/></svg>
+                    <span id="header-model-name">Loading...</span>
+                </div>
+            </header>
+
+            <div id="chat-messages" class="flex-1 w-full max-w-4xl mx-auto p-4 md:p-6 pb-32 space-y-6">
+                <div id="welcome-screen" class="flex flex-col items-center justify-center h-full text-center space-y-5 text-gray-500 dark:text-gray-400 opacity-0 transition-opacity duration-500 hidden pt-10">
+                    <div class="w-20 h-20 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-2 shadow-xl transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">Aura AI Professional</h2>
+                    <p class="max-w-md text-sm md:text-base leading-relaxed">Advanced intelligence at your fingertips. Input code, analyze data, or generate ideas seamlessly.</p>
+                </div>
+            </div>
+
+            <div class="sticky bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent dark:from-[#0b1120] dark:via-[#0b1120] z-20 pb-safe">
+                <div class="max-w-4xl mx-auto relative">
+                    <div class="flex items-end bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-3xl shadow-xl p-2 transition-all focus-within:ring-4 focus-within:ring-blue-500/20 focus-within:border-blue-500 dark:focus-within:border-blue-500">
+                        <textarea id="chat-input" rows="1" class="w-full max-h-[250px] min-h-[44px] bg-transparent border-0 focus:ring-0 resize-none py-2.5 px-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 m-0" placeholder="Type a message, paste code, or share an idea..."></textarea>
+                        
+                        <button id="send-btn" onclick="handleSend()" class="p-3 ml-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 shadow-lg hover:shadow-blue-500/25 mb-0.5">
+                            <svg id="send-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                            <svg id="stop-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+                        </button>
+                    </div>
+                    <div class="text-center mt-3 text-xs text-gray-400 dark:text-gray-500 font-medium">
+                        Aura AI Pro can make mistakes. Verify critical code and data.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="settings-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-lg border border-gray-200 dark:border-gray-700 transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="settings-card">
+            
+            <div class="p-5 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-gray-800/50 rounded-t-2xl">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                    Pro Settings
+                </h3>
+                <button onclick="closeSettings()" class="text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 p-1.5 rounded-lg transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            
+            <div class="p-6 space-y-6 overflow-y-auto flex-1 custom-scrollbar">
+                
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">OpenRouter API Key <span class="text-red-500">*</span></label>
+                    <input type="password" id="api-key-input" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all shadow-inner" placeholder="sk-or-v1-...">
+                </div>
+
+                <div class="bg-blue-50/50 dark:bg-blue-900/10 p-4 rounded-xl border border-blue-100 dark:border-blue-900/30">
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">AI Engine (Model)</label>
+                    <div class="relative mb-3">
+                        <select id="model-select" onchange="checkCustomModel()" class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-sm appearance-none focus:ring-2 focus:ring-blue-500 outline-none transition-shadow pr-10 font-medium cursor-pointer shadow-sm">
+                            <optgroup label="Free Tier Models">
+                                <option value="deepseek/deepseek-r1:free">DeepSeek R1 (Free)</option>
+                                <option value="deepseek/deepseek-chat:free">DeepSeek Chat (Free)</option>
+                                <option value="google/gemini-2.5-pro:free">Gemini 2.5 Pro (Free)</option>
+                                <option value="google/gemini-2.5-flash:free">Gemini 2.5 Flash (Free)</option>
+                                <option value="meta-llama/llama-3.1-8b-instruct:free">Llama 3.1 8B Instruct (Free)</option>
+                            </optgroup>
+                            <optgroup label="Premium / Other">
+                                <option value="custom">⚙️ Custom Model (Enter ID)</option>
+                            </optgroup>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+                    <div id="custom-model-container" class="hidden">
+                        <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1 mt-2">Enter Custom OpenRouter Model ID:</label>
+                        <input type="text" id="custom-model-input" class="w-full bg-white dark:bg-gray-800 border border-blue-300 dark:border-blue-600 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. openai/gpt-4o or anthropic/claude-3-opus">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 flex justify-between">
+                            <span>Temperature</span> <span id="temp-val" class="text-blue-600 dark:text-blue-400">0.7</span>
+                        </label>
+                        <input type="range" id="temp-slider" min="0" max="2" step="0.1" value="0.7" class="w-full accent-blue-600" oninput="document.getElementById('temp-val').textContent=this.value">
+                        <div class="flex justify-between text-[10px] text-gray-500 mt-1 uppercase tracking-wide">
+                            <span>Precise</span><span>Creative</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Max Tokens</label>
+                        <input type="number" id="max-tokens-input" value="2048" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">System Instructions (Prompt)</label>
+                    <textarea id="system-prompt-input" rows="4" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-shadow resize-y shadow-inner font-mono" placeholder="You are a senior developer..."></textarea>
+                </div>
+            </div>
+
+            <div class="p-5 border-t border-gray-200 dark:border-gray-800 flex justify-end gap-3 bg-gray-50 dark:bg-gray-800/50 rounded-b-2xl">
+                <button onclick="closeSettings()" class="px-5 py-2.5 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-colors">Cancel</button>
+                <button onclick="saveSettings()" class="px-6 py-2.5 text-sm font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-transform active:scale-95 shadow-md shadow-blue-500/30">Save Configuration</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-24 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <script>
+        // ==========================================
+        // CONFIG & STATE (PRO)
+        // ==========================================
+        const STORAGE_KEY = 'aura_ai_pro_data';
+        let appState = {
+            apiKey: '',
+            model: 'deepseek/deepseek-r1:free',
+            customModel: '',
+            temperature: 0.7,
+            maxTokens: 2048,
+            systemPrompt: 'You are Aura AI Pro, a senior intelligence assistant. You provide extremely precise, professional, and structured answers. When writing code, write production-ready syntax.',
+            darkMode: true, // Default to pro dark mode
+            chats: [],
+            currentChatId: null
+        };
+
+        let isGenerating = false;
+        let abortController = null;
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        function initApp() {
+            try {
+                // Configure Marked.js safely
+                if (typeof marked !== 'undefined') {
+                    marked.setOptions({ 
+                        breaks: true, 
+                        gfm: true 
+                    });
+                }
+
+                loadState();
+                applyTheme();
+                
+                // Set UI from state
+                document.getElementById('api-key-input').value = appState.apiKey || '';
+                document.getElementById('model-select').value = appState.model;
+                document.getElementById('custom-model-input').value = appState.customModel || '';
+                document.getElementById('temp-slider').value = appState.temperature;
+                document.getElementById('temp-val').textContent = appState.temperature;
+                document.getElementById('max-tokens-input').value = appState.maxTokens;
+                document.getElementById('system-prompt-input').value = appState.systemPrompt;
+                
+                checkCustomModel();
+                updateHeaderModel();
+                renderChatList();
+
+                if (appState.chats.length === 0) {
+                    createNewChat();
+                } else if (!appState.currentChatId) {
+                    selectChat(appState.chats[0].id);
+                } else {
+                    selectChat(appState.currentChatId);
+                }
+
+                setupTextareaAutoResize();
+
+                // Hide loader gracefully
+                setTimeout(() => {
+                    const loader = document.getElementById('loading');
+                    loader.style.opacity = '0';
+                    document.getElementById('app').classList.remove('hidden');
+                    setTimeout(() => loader.remove(), 500);
+                }, 600);
+
+            } catch (error) {
+                console.error("Init Error:", error);
+                document.getElementById('loading').innerHTML = `<div class="text-red-500 p-5 bg-white rounded-lg shadow-xl font-mono text-sm">System Failure: ${error.message}</div>`;
+            }
+        }
+
+        // ==========================================
+        // STORAGE & LOGIC
+        // ==========================================
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    appState = { ...appState, ...parsed };
+                    if (!Array.isArray(appState.chats)) appState.chats = [];
+                }
+            } catch (e) { console.warn("State load failed."); }
+        }
+
+        function saveState() {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } 
+            catch (e) { console.warn("State save failed."); }
+        }
+
+        function getActiveModel() {
+            return appState.model === 'custom' && appState.customModel.trim() !== '' 
+                   ? appState.customModel.trim() 
+                   : appState.model;
+        }
+
+        // ==========================================
+        // UI COMPONENTS & THEMES
+        // ==========================================
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast-enter bg-gray-900 text-white dark:bg-white dark:text-gray-900 px-4 py-2 rounded-lg shadow-lg text-sm font-medium flex items-center gap-2 pointer-events-auto';
+            toast.innerHTML = `<svg class="w-4 h-4 text-green-400 dark:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                toast.style.transition = 'all 0.3s ease-out';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function toggleTheme() {
+            appState.darkMode = !appState.darkMode;
+            applyTheme();
+            saveState();
+        }
+
+        function applyTheme() {
+            const html = document.documentElement;
+            const themeBtn = document.getElementById('theme-btn');
+            if (appState.darkMode) {
+                html.classList.add('dark');
+                themeBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>`;
+            } else {
+                html.classList.remove('dark');
+                themeBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>`;
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // ==========================================
+        // SETTINGS & ADVANCED LOGIC
+        // ==========================================
+        function checkCustomModel() {
+            const select = document.getElementById('model-select');
+            const container = document.getElementById('custom-model-container');
+            if (select.value === 'custom') {
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+
+        function openSettings() {
+            const modal = document.getElementById('settings-modal');
+            const card = document.getElementById('settings-card');
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                card.classList.remove('scale-95');
+                card.classList.add('scale-100');
+            });
+        }
+
+        function closeSettings() {
+            const modal = document.getElementById('settings-modal');
+            const card = document.getElementById('settings-card');
+            modal.classList.add('opacity-0');
+            card.classList.remove('scale-100');
+            card.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function saveSettings() {
+            appState.apiKey = document.getElementById('api-key-input').value.trim();
+            appState.model = document.getElementById('model-select').value;
+            appState.customModel = document.getElementById('custom-model-input').value.trim();
+            appState.temperature = parseFloat(document.getElementById('temp-slider').value);
+            appState.maxTokens = parseInt(document.getElementById('max-tokens-input').value) || 2048;
+            appState.systemPrompt = document.getElementById('system-prompt-input').value.trim();
+            
+            saveState();
+            updateHeaderModel();
+            closeSettings();
+            showToast("Settings Saved");
+        }
+
+        function updateHeaderModel() {
+            const display = getActiveModel().split('/').pop() || "Unknown"; // Get short name
+            document.getElementById('header-model-name').textContent = display;
+        }
+
+        function setupTextareaAutoResize() {
+            const tx = document.getElementById('chat-input');
+            tx.addEventListener("input", function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + "px";
+                if(this.value === '') this.style.height = 'auto';
+            });
+            tx.addEventListener("keydown", function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                }
+            });
+        }
+
+        // ==========================================
+        // DATA EXPORT (PRO FEATURE)
+        // ==========================================
+        function exportCurrentChat() {
+            const chat = appState.chats.find(c => c.id === appState.currentChatId);
+            if (!chat || chat.messages.length === 0) {
+                alert("Nothing to export!");
+                return;
+            }
+
+            let exportText = `# Chat Export: ${chat.title}\n# Date: ${new Date().toLocaleString()}\n# Model: ${getActiveModel()}\n\n`;
+            
+            chat.messages.forEach(m => {
+                const role = m.role === 'user' ? '👤 YOU' : '🤖 AURA AI';
+                exportText += `--- ${role} ---\n${m.content}\n\n`;
+            });
+
+            const blob = new Blob([exportText], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `AuraAI_Export_${chat.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Chat Exported Successfully");
+            if(window.innerWidth < 768) toggleSidebar();
+        }
+
+        // ==========================================
+        // CHAT MANAGEMENT
+        // ==========================================
+        function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
+
+        function createNewChat() {
+            if (isGenerating) return;
+            const newChat = { id: generateId(), title: 'New Workspace', messages: [] };
+            appState.chats.unshift(newChat);
+            selectChat(newChat.id);
+            if (window.innerWidth < 768) toggleSidebar();
+        }
+
+        function selectChat(id) {
+            if (isGenerating) return;
+            appState.currentChatId = id;
+            saveState();
+            renderChatList();
+            renderMessages();
+        }
+
+        function deleteChat(id, event) {
+            event.stopPropagation();
+            if (isGenerating) return;
+            if (!confirm("Permanently delete this workspace?")) return;
+            
+            appState.chats = appState.chats.filter(c => c.id !== id);
+            if (appState.currentChatId === id) {
+                appState.currentChatId = appState.chats.length > 0 ? appState.chats[0].id : null;
+            }
+            if (appState.chats.length === 0) createNewChat();
+            else { saveState(); renderChatList(); renderMessages(); }
+        }
+
+        function renameChat(id, event) {
+            event.stopPropagation();
+            const chat = appState.chats.find(c => c.id === id);
+            if (!chat) return;
+            const newTitle = prompt("Enter new title:", chat.title);
+            if (newTitle && newTitle.trim()) {
+                chat.title = newTitle.trim();
+                saveState();
+                renderChatList();
+                if (appState.currentChatId === id) document.getElementById('current-chat-title').textContent = chat.title;
+            }
+        }
+
+        function renderChatList() {
+            const container = document.getElementById('chat-list');
+            container.innerHTML = '';
+            
+            appState.chats.forEach(chat => {
+                const isActive = chat.id === appState.currentChatId;
+                const div = document.createElement('div');
+                div.className = `group flex items-center justify-between p-2.5 rounded-lg cursor-pointer transition-all border ${isActive ? 'bg-white dark:bg-gray-800 border-blue-200 dark:border-blue-900 shadow-sm text-blue-700 dark:text-blue-400 font-bold' : 'border-transparent hover:bg-gray-200 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 font-medium'}`;
+                div.onclick = () => selectChat(chat.id);
+                
+                div.innerHTML = `
+                    <div class="flex items-center gap-3 overflow-hidden flex-1">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                        <span class="truncate text-sm tracking-wide">${escapeHTML(chat.title)}</span>
+                    </div>
+                    <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onclick="renameChat('${chat.id}', event)" class="p-1 hover:text-blue-500 rounded"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></button>
+                        <button onclick="deleteChat('${chat.id}', event)" class="p-1 hover:text-red-500 rounded"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // ==========================================
+        // MESSAGE RENDERING & COPY (PRO FEATURE)
+        // ==========================================
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, tag => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+            }[tag] || tag));
+        }
+
+        function copyMessage(btn, index) {
+            const chat = appState.chats.find(c => c.id === appState.currentChatId);
+            if(!chat || !chat.messages[index]) return;
+            const text = chat.messages[index].content;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `<svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Copied!`;
+                setTimeout(() => btn.innerHTML = originalHTML, 2000);
+            });
+        }
+
+        function renderMessages() {
+            const chat = appState.chats.find(c => c.id === appState.currentChatId);
+            const container = document.getElementById('chat-messages');
+            const welcome = document.getElementById('welcome-screen');
+            const titleEl = document.getElementById('current-chat-title');
+            
+            if (!chat) return;
+            titleEl.textContent = chat.title;
+
+            Array.from(container.children).forEach(child => { if (child.id !== 'welcome-screen') child.remove(); });
+
+            if (chat.messages.length === 0) {
+                welcome.classList.remove('hidden');
+                setTimeout(() => welcome.classList.remove('opacity-0'), 50);
+            } else {
+                welcome.classList.add('hidden');
+                welcome.classList.add('opacity-0');
+                
+                chat.messages.forEach((msg, index) => {
+                    const isLast = index === chat.messages.length - 1;
+                    appendMessageUI(msg.role, msg.content, index, isLast && isGenerating);
+                });
+                scrollToBottom();
+            }
+        }
+
+        function appendMessageUI(role, content, index, isTyping = false) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            
+            if (role === 'user') {
+                div.className = "flex w-full justify-end animate-fade-in";
+                div.innerHTML = `
+                    <div class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 max-w-[85%] sm:max-w-[75%] rounded-3xl rounded-tr-sm px-5 py-3.5 shadow-sm whitespace-pre-wrap break-words leading-relaxed border border-gray-200 dark:border-gray-700">
+                        ${escapeHTML(content)}
+                    </div>
+                `;
+            } else {
+                div.className = "flex w-full justify-start animate-fade-in group";
+                const parsedContent = typeof marked !== 'undefined' ? marked.parse(content) : escapeHTML(content);
+                const cursorHtml = isTyping ? '<span class="typing-cursor"></span>' : '';
+                
+                div.innerHTML = `
+                    <div class="flex gap-3 sm:gap-4 max-w-[100%] sm:max-w-[90%] w-full">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex-shrink-0 flex items-center justify-center text-white shadow-md mt-1 border border-white/20">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <div class="flex flex-col w-full min-w-0">
+                            <div class="prose dark:prose-invert max-w-none break-words overflow-x-auto text-gray-800 dark:text-gray-200 leading-relaxed font-sans">
+                                ${parsedContent}${cursorHtml}
+                            </div>
+                            <div class="flex mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                ${!isTyping ? `
+                                <button onclick="copyMessage(this, ${index})" class="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 font-medium bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                    Copy Content
+                                </button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                if (isTyping) div.id = 'active-ai-message';
+            }
+            container.appendChild(div);
+        }
+
+        function updateActiveAIMessage(content, isDone = false) {
+            const activeMsg = document.getElementById('active-ai-message');
+            if (!activeMsg) return;
+            
+            const contentBox = activeMsg.querySelector('.prose');
+            if (contentBox) {
+                const parsed = typeof marked !== 'undefined' ? marked.parse(content) : escapeHTML(content);
+                const cursorHtml = isDone ? '' : '<span class="typing-cursor"></span>';
+                contentBox.innerHTML = parsed + cursorHtml;
+            }
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // ==========================================
+        // API COMMUNICATION (STREAMING + ADVANCED PARAMS)
+        // ==========================================
+        async function handleSend() {
+            if (isGenerating) {
+                if (abortController) abortController.abort();
+                isGenerating = false;
+                toggleInputState(false);
+                return;
+            }
+
+            const inputEl = document.getElementById('chat-input');
+            const text = inputEl.value.trim();
+            if (!text) return;
+
+            if (!appState.apiKey) {
+                alert("Please configure your OpenRouter API Key in the Settings menu.");
+                openSettings();
+                return;
+            }
+
+            const activeModel = getActiveModel();
+            if (!activeModel) {
+                alert("Please select a valid model in Settings.");
+                return;
+            }
+
+            const chat = appState.chats.find(c => c.id === appState.currentChatId);
+            if (!chat) return;
+
+            if (chat.title === 'New Workspace' && chat.messages.length === 0) {
+                chat.title = text.split('\n')[0].slice(0, 35) + (text.length > 35 ? '...' : '');
+                document.getElementById('current-chat-title').textContent = chat.title;
+            }
+
+            // Push User Message
+            chat.messages.push({ role: 'user', content: text });
+            inputEl.value = '';
+            inputEl.style.height = 'auto';
+            
+            // AI Placeholder
+            const newIndex = chat.messages.length;
+            chat.messages.push({ role: 'assistant', content: '' });
+            
+            saveState();
+            renderChatList();
+            renderMessages();
+            
+            isGenerating = true;
+            toggleInputState(true);
+            abortController = new AbortController();
+
+            try {
+                const apiMessages = [
+                    { role: 'system', content: appState.systemPrompt },
+                    ...chat.messages.slice(0, -1).map(m => ({ role: m.role, content: m.content }))
+                ];
+
+                const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${appState.apiKey}`,
+                        'HTTP-Referer': window.location.href,
+                        'X-Title': 'Aura AI Pro Workspace'
+                    },
+                    body: JSON.stringify({
+                        model: activeModel,
+                        messages: apiMessages,
+                        temperature: appState.temperature,
+                        max_tokens: appState.maxTokens,
+                        stream: true
+                    }),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error?.message || `API Error ${response.status}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder('utf-8');
+                let fullText = "";
+                let buffer = "";
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop(); 
+                    
+                    for (let line of lines) {
+                        line = line.trim();
+                        if (!line || line === 'data: [DONE]') continue;
+                        if (line.startsWith('data: ')) {
+                            try {
+                                const data = JSON.parse(line.slice(6));
+                                const delta = data.choices[0]?.delta?.content || "";
+                                fullText += delta;
+                                updateActiveAIMessage(fullText, false);
+                                
+                                if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 250) {
+                                    scrollToBottom();
+                                }
+                            } catch (e) { /* Ignore frag parse err */ }
+                        }
+                    }
+                }
+
+                chat.messages[chat.messages.length - 1].content = fullText;
+                updateActiveAIMessage(fullText, true);
+                
+                // Refresh full UI for the copy button injection
+                renderMessages();
+
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    const errText = `**System Error:** ${error.message}\n\n*Tip: Check if your API key is correct and if the Custom Model ID is valid for OpenRouter.*`;
+                    chat.messages[chat.messages.length - 1].content = errText;
+                    renderMessages();
+                } else {
+                    chat.messages[chat.messages.length - 1].content += "\n\n*(Generation Terminated by User)*";
+                    renderMessages();
+                }
+            } finally {
+                isGenerating = false;
+                abortController = null;
+                toggleInputState(false);
+                saveState();
+            }
+        }
+
+        function toggleInputState(generating) {
+            const btn = document.getElementById('send-btn');
+            const sendIcon = document.getElementById('send-icon');
+            const stopIcon = document.getElementById('stop-icon');
+            
+            if (generating) {
+                btn.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'shadow-blue-500/25');
+                btn.classList.add('bg-red-500', 'hover:bg-red-600', 'shadow-red-500/25');
+                sendIcon.classList.add('hidden');
+                stopIcon.classList.remove('hidden');
+            } else {
+                btn.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-blue-500/25');
+                btn.classList.remove('bg-red-500', 'hover:bg-red-600', 'shadow-red-500/25');
+                sendIcon.classList.remove('hidden');
+                stopIcon.classList.add('hidden');
+            }
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+            .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        `;
+        document.head.appendChild(style);
+
+        // Run App
+        window.onload = initApp;
+
+    </script>
 </body>
 </html>
